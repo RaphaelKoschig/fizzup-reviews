@@ -14,15 +14,16 @@ import {
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import * as serviceWorker from './serviceWorker';
-// Import your reducers and routes here
 import Welcome from './Welcome';
+import review from './reducers/review/';
+import reviewRoutes from './routes/review';
 
 const history = createBrowserHistory();
 const store = createStore(
   combineReducers({
     router: connectRouter(history),
     form,
-    /* Add your reducers here */
+    review,
   }),
   applyMiddleware(routerMiddleware(history), thunk)
 );
@@ -31,8 +32,8 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={Welcome} strict={true} exact={true}/>
-        {/* Add your routes here */}
+        <Route path="/reviews" component={Welcome} strict={true} exact={true}/>
+        {reviewRoutes}
         <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </ConnectedRouter>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/review/list';
+// import Image from 'react-bootstrap/Image';
 
 class List extends Component {
   static propTypes = {
@@ -83,7 +84,7 @@ class List extends Component {
                   <td>{item['email']}</td>
                   <td>{item['rating']}</td>
                   <td>{item['comment']}</td>
-                  <td><img src={item['photo']} /></td>
+                  <td><img src={item['photo']} class="img-fluid img-thumbnail" style={imgStyle}/></td>
                   <td>{item['createdAt']}</td>
                   <td>
                     <Link to={`show/${encodeURIComponent(item['@id'])}`}>
@@ -178,5 +179,9 @@ const mapDispatchToProps = dispatch => ({
   list: page => dispatch(list(page)),
   reset: eventSource => dispatch(reset(eventSource))
 });
+
+const imgStyle = {
+  width: '100px',
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

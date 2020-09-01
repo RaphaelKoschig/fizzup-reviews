@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/review/list';
-// import Image from 'react-bootstrap/Image';
+import Image from "react-bootstrap/Image";
 
 class List extends Component {
   static propTypes = {
@@ -54,14 +54,13 @@ class List extends Component {
 
         <p>
           <Link to="create" className="btn btn-primary">
-            Create
+            Add a review
           </Link>
         </p>
 
         <table className="table table-responsive table-striped table-hover">
           <thead>
             <tr>
-              <th>id</th>
               <th>pseudo</th>
               <th>email</th>
               <th>rating</th>
@@ -75,16 +74,11 @@ class List extends Component {
             {this.props.retrieved &&
               this.props.retrieved['hydra:member'].map(item => (
                 <tr key={item['@id']}>
-                  <th scope="row">
-                    <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                      {item['@id']}
-                    </Link>
-                  </th>
                   <td>{item['pseudo']}</td>
                   <td>{item['email']}</td>
                   <td>{item['rating']}</td>
                   <td>{item['comment']}</td>
-                  <td><img src={item['photo']} class="img-fluid img-thumbnail" style={imgStyle}/></td>
+                  <td><Image src={item['photo']} thumbnail style={imgStyle}/></td>
                   <td>{item['createdAt']}</td>
                   <td>
                     <Link to={`show/${encodeURIComponent(item['@id'])}`}>

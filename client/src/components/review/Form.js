@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import PhotoUploader from "../file/PhotoUploader";
 
 class Form extends Component {
   static propTypes = {
@@ -76,6 +77,7 @@ class Form extends Component {
           type="text"
           placeholder=""
         />
+        <PhotoUploader/>
 
         {/*
         <Field

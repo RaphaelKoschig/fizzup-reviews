@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, change } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import ImageUploader from 'react-images-upload';
 import Button from "react-bootstrap/Button";
+import { ENTRYPOINT } from '../../config/entrypoint';
+import axios from 'axios';
 
 
 class Form extends Component {
@@ -61,7 +63,23 @@ renderField = data => {
   }
 
   fileUploadHandler = () => {
+    // Create an object of formData
+    const formData = new FormData();
 
+    // Update the formData object
+    formData.append(
+      'file',
+      this.state.selectedFile,
+      this.state.selectedFile.name,
+    );
+    formData.append('filename', this.state.selectedFile.name)
+    axios.post(ENTRYPOINT+'/uploads', formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(res => {console.log(res.statusText)});
   }
 
 render() {

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/review/list';
 import Image from "react-bootstrap/Image";
+import { ENTRYPOINT } from '../../config/entrypoint';
 
 class List extends Component {
   static propTypes = {
@@ -78,7 +79,7 @@ class List extends Component {
                   <td>{item['email']}</td>
                   <td>{item['rating']}</td>
                   <td>{item['comment']}</td>
-                  <td><Image src={item['photo']} thumbnail style={imgStyle}/></td>
+                  <td><Image src={ENTRYPOINT +'/photo/'+ item['photo']} thumbnail style={imgStyle}/></td>
                   <td>{item['createdAt']}</td>
                   <td>
                     <Link to={`show/${encodeURIComponent(item['@id'])}`}>

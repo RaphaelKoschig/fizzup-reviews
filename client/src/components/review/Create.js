@@ -4,8 +4,14 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from './Form';
 import { create, reset } from '../../actions/review/create';
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import {bindActionCreators} from "redux";
+import {change} from "redux-form";
+import ImageUploader from "react-images-upload";
 
 class Create extends Component {
+
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
@@ -27,7 +33,7 @@ class Create extends Component {
       );
 
     return (
-      <div>
+      <Container>
         <h1>New Review</h1>
 
         {this.props.loading && (
@@ -46,7 +52,7 @@ class Create extends Component {
         <Link to="." className="btn btn-primary">
           Back to list
         </Link>
-      </div>
+      </Container>
     );
   }
 }

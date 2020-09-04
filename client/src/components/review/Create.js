@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 import Form from './Form';
 import { create, reset } from '../../actions/review/create';
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import {bindActionCreators} from "redux";
-import {change} from "redux-form";
-import ImageUploader from "react-images-upload";
 
 class Create extends Component {
 
@@ -34,7 +30,7 @@ class Create extends Component {
 
     return (
       <Container>
-        <h1>New Review</h1>
+        <h1>Nouvel avis - consommateur</h1>
 
         {this.props.loading && (
           <div className="alert alert-info" role="status">
@@ -49,6 +45,7 @@ class Create extends Component {
         )}
 
         <Form onSubmit={this.props.create} values={this.props.item} />
+
         <Link to="." className="btn btn-primary">
           Back to list
         </Link>

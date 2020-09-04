@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import ImageUploader from 'react-images-upload';
-import Button from "react-bootstrap/Button";
 import { ENTRYPOINT } from '../../config/entrypoint';
 import axios from 'axios';
+import SlateInput from "../tools/SlateInput";
 
 
 class Form extends Component {
@@ -63,10 +63,8 @@ renderField = data => {
   }
 
   fileUploadHandler = () => {
-    // Create an object of formData
     const formData = new FormData();
 
-    // Update the formData object
     formData.append(
       'file',
       this.state.selectedFile,
@@ -81,6 +79,18 @@ renderField = data => {
       })
       .then(res => {console.log(res.statusText)});
   }
+
+  storeCommentInFormData = () => {
+    let commentValue = localStorage.getItem('comment');
+    this.props.change('comment', commentValue);
+  }
+
+  allActionOnData = () => {
+    this.fileUploadHandler();
+    this.storeCommentInFormData();
+  }
+
+
 
 render() {
   return (
@@ -104,18 +114,7 @@ render() {
         placeholder=""
         normalize={v => parseFloat(v)}
       />
-      <Field
-        component={this.renderField}
-        name="comment"
-        type="text"
-        placeholder=""
-      />
-      <Field
-        component={this.renderField}
-        name="photo"
-        type="text"
-        placeholder=""
-      />
+      <SlateInput/>
       <ImageUploader
         withIcon={true}
         buttonText='Choose one photo'
@@ -124,8 +123,8 @@ render() {
         maxFileSize={5242880}
         singleImage={true}
       />
-      <Button onClick={this.fileUploadHandler} variant="secondary">Upload</Button>
-      <button type="submit" className="btn btn-success">
+      {/*<Button onClick={this.storeCommentInFormData} variant="secondary">Comment</Button>*/}
+      <button onClick={this.allActionOnData} type="submit" className="btn btn-success">
         Submit
       </button>
     </form>

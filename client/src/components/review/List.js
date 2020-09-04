@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/review/list';
 import Image from "react-bootstrap/Image";
 import { ENTRYPOINT } from '../../config/entrypoint';
+import SlateReader from "../tools/SlateReader";
 
 class List extends Component {
   static propTypes = {
@@ -78,7 +79,7 @@ class List extends Component {
                   <td>{item['pseudo']}</td>
                   <td>{item['email']}</td>
                   <td>{item['rating']}</td>
-                  <td>{item['comment']}</td>
+                  <td><SlateReader itemValue={item['comment']}/></td>
                   <td><Image src={ENTRYPOINT +'/photo/'+ item['photo']} thumbnail style={imgStyle}/></td>
                   <td>{item['createdAt']}</td>
                   <td>
@@ -94,7 +95,8 @@ class List extends Component {
                     </Link>
                   </td>
                 </tr>
-              ))}
+              ))
+            }
           </tbody>
         </table>
 

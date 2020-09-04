@@ -101,6 +101,7 @@ const SlateInput = () => {
             CustomEditor.toggleBoldMark(editor)
           }}
           variant="outline-dark"
+          className="button-slate"
         >
           <strong>B</strong>
         </Button>
@@ -110,6 +111,7 @@ const SlateInput = () => {
             CustomEditor.toggleItalicMark(editor)
           }}
           variant="outline-dark"
+          className="button-slate"
         >
           <em>i</em>
         </Button>
@@ -119,6 +121,7 @@ const SlateInput = () => {
             CustomEditor.toggleListBlock(editor)
           }}
           variant="outline-dark"
+          className="button-slate"
         >
           <Image src={process.env.PUBLIC_URL + '/slateList.png'} fluid />
         </Button>
@@ -157,7 +160,6 @@ const SlateInput = () => {
   )
 }
 
-// Define a React component to render leaves with bold text.
 const Leaf = props => {
   return (
     <span
@@ -193,6 +195,7 @@ const imgStyle = {
 const editableStyle = {
   border: '1px grey solid',
   borderRadius: '5px',
+  height: '100px',
 };
 
 

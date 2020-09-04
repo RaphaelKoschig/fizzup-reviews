@@ -1,0 +1,20 @@
+.review-form {
+    margin-top: 40px;
+}
+
+.main-container {
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+.review-container {
+    border: 1px #aaaaaa solid;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.review-photo {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 10px;
+}

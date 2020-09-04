@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Form from './Form';
 import { create, reset } from '../../actions/review/create';
 import Container from "react-bootstrap/Container";
+import './review.css';
 
 class Create extends Component {
 
@@ -29,8 +30,11 @@ class Create extends Component {
       );
 
     return (
-      <Container>
+      <Container fluid className="container-md main-container">
         <h1>Nouvel avis - consommateur</h1>
+        <Link to="." className="btn btn-secondary">
+          Back to list
+        </Link>
 
         {this.props.loading && (
           <div className="alert alert-info" role="status">
@@ -43,12 +47,9 @@ class Create extends Component {
             {this.props.error}
           </div>
         )}
-
-        <Form onSubmit={this.props.create} values={this.props.item} />
-
-        <Link to="." className="btn btn-primary">
-          Back to list
-        </Link>
+        <div className="review-form">
+          <Form onSubmit={this.props.create} values={this.props.item} />
+        </div>
       </Container>
     );
   }

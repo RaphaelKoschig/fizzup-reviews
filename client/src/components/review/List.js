@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/review/list';
-import Image from "react-bootstrap/Image";
 import { ENTRYPOINT } from '../../config/entrypoint';
 import SlateReader from "../tools/SlateReader";
+import ReactStars from "react-rating-stars-component";
+import {Col, Container, Row, Image} from "react-bootstrap";
+import Moment from 'moment';
+import './review.css'
 
 class List extends Component {
   static propTypes = {
@@ -38,16 +41,18 @@ class List extends Component {
   }
 
   render() {
+    Moment.locale('fr');
+
     return (
-      <div>
-        <h1>Review List</h1>
+      <Container className="main-container">
+        <h1>Liste des avis</h1>
 
         {this.props.loading && (
-          <div className="alert alert-info">Loading...</div>
+          <div className="alert alert-info">Chargement...</div>
         )}
         {this.props.deletedItem && (
           <div className="alert alert-success">
-            {this.props.deletedItem['@id']} deleted.
+            {this.props.deletedItem['@id']} effacé.
           </div>
         )}
         {this.props.error && (
@@ -56,52 +61,40 @@ class List extends Component {
 
         <p>
           <Link to="create" className="btn btn-primary">
-            Add a review
+            Donner votre avis
           </Link>
         </p>
 
-        <table className="table table-responsive table-striped table-hover">
-          <thead>
-            <tr>
-              <th>pseudo</th>
-              <th>email</th>
-              <th>rating</th>
-              <th>comment</th>
-              <th>photo</th>
-              <th>createdAt</th>
-              <th colSpan={2} />
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.retrieved &&
-              this.props.retrieved['hydra:member'].map(item => (
-                <tr key={item['@id']}>
-                  <td>{item['pseudo']}</td>
-                  <td>{item['email']}</td>
-                  <td>{item['rating']}</td>
-                  <td><SlateReader itemValue={item['comment']}/></td>
-                  <td><Image src={ENTRYPOINT +'/photo/'+ item['photo']} thumbnail style={imgStyle}/></td>
-                  <td>{item['createdAt']}</td>
-                  <td>
-                    <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                      <span className="fa fa-search" aria-hidden="true" />
-                      <span className="sr-only">Show</span>
-                    </Link>
-                  </td>
-                  <td>
-                    <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
-                      <span className="fa fa-pencil" aria-hidden="true" />
-                      <span className="sr-only">Edit</span>
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-
+        {this.props.retrieved &&
+        this.props.retrieved['hydra:member'].map(item => (
+          <Container key={item['@id']} className="review-container">
+              <Row className="justify-content-between">
+                <Col>
+                  <ReactStars value={item['rating']} edit={false}/>
+                  <strong>{item['pseudo']}</strong>
+                </Col>
+                <Col className="col-4">
+                  <Row>
+                    Publié le {Moment(item['createdAt']).format('DD/MM/Y')} à {Moment(item['createdAt']).format('HH:mm')}
+                  </Row>
+                  <Row>
+                    email : {item['email']}
+                  </Row>
+                </Col>
+              </Row>
+              <Row className="bg-light align-items-center">
+                <Col className="col-8">
+                  <SlateReader itemValue={item['comment']}/>
+                </Col>
+                <Col className="justify-content-center col-4">
+                  <a href={ENTRYPOINT +'/photo/'+ item['photo']}><Image src={ENTRYPOINT +'/photo/'+ item['photo']} className="review-photo" thumbnail/></a>
+                </Col>
+              </Row>
+          </Container>
+        ))
+        }
         {this.pagination()}
-      </div>
+      </Container>
     );
   }
 
@@ -176,9 +169,5 @@ const mapDispatchToProps = dispatch => ({
   list: page => dispatch(list(page)),
   reset: eventSource => dispatch(reset(eventSource))
 });
-
-const imgStyle = {
-  width: '100px',
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

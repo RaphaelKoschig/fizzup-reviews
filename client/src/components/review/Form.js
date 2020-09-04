@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm} from 'redux-form';
 import PropTypes from 'prop-types';
 import ImageUploader from 'react-images-upload';
 import { ENTRYPOINT } from '../../config/entrypoint';
 import axios from 'axios';
 import SlateInput from "../tools/SlateInput";
+import ReactStars from "react-rating-stars-component";
+import {Col, Row} from "react-bootstrap";
 
 
 class Form extends Component {
@@ -16,50 +18,52 @@ class Form extends Component {
     this.onDrop = this.onDrop.bind(this);
   }
 
-static propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.string
-};
+  static propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    error: PropTypes.string
+  };
 
-renderField = data => {
-  data.input.className = 'form-control';
+  renderField = data => {
+    data.input.className = 'form-control';
 
-  const isInvalid = data.meta.touched && !!data.meta.error;
-  if (isInvalid) {
-    data.input.className += ' is-invalid';
-    data.input['aria-invalid'] = true;
-  }
+    const isInvalid = data.meta.touched && !!data.meta.error;
+    if (isInvalid) {
+      data.input.className += ' is-invalid';
+      data.input['aria-invalid'] = true;
+    }
 
-  if (this.props.error && data.meta.touched && !data.meta.error) {
-    data.input.className += ' is-valid';
-  }
+    if (this.props.error && data.meta.touched && !data.meta.error) {
+      data.input.className += ' is-valid';
+    }
 
-  return (
-    <div className={`form-group`}>
-      <label
-        htmlFor={`review_${data.input.name}`}
-        className="form-control-label"
-      >
-        {data.input.name}
-      </label>
-      <input
-        {...data.input}
-        type={data.type}
-        step={data.step}
-        required={data.required}
-        placeholder={data.placeholder}
-        id={`review_${data.input.name}`}
-      />
-      {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
-    </div>
-  );
-};
+    return (
+      <div className={`form-group`}>
+        <label
+          htmlFor={`review_${data.input.name}`}
+          className="form-control-label"
+        >
+          {data.input.name}
+        </label>
+        <input
+          {...data.input}
+          type={data.type}
+          step={data.step}
+          required={data.required}
+          placeholder={data.placeholder}
+          id={`review_${data.input.name}`}
+        />
+        {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
+      </div>
+    );
+  };
 
   onDrop(picture) {
     this.setState({
       selectedFile: picture[0]
     });
-    this.props.change('photo', picture[0].name);
+    if (picture[0] != undefined) {
+      this.props.change('photo', picture[0].name);
+    }
   }
 
   fileUploadHandler = () => {
@@ -85,51 +89,65 @@ renderField = data => {
     this.props.change('comment', commentValue);
   }
 
+  giveRatingFromStars = () => {
+
+  }
+
   allActionOnData = () => {
     this.fileUploadHandler();
     this.storeCommentInFormData();
   }
 
+  render() {
 
+    const editableStars = {
+      size: 40,
+      edit: true,
+      onChange: starValue => {
+        this.props.change('rating', starValue)
+      }
+    };
 
-render() {
-  return (
-    <form onSubmit={this.props.handleSubmit}>
-      <Field
-        component={this.renderField}
-        name="pseudo"
-        type="text"
-        placeholder=""
-      />
-      <Field
-        component={this.renderField}
-        name="email"
-        type="text"
-        placeholder=""
-      />
-      <Field
-        component={this.renderField}
-        name="rating"
-        type="number"
-        placeholder=""
-        normalize={v => parseFloat(v)}
-      />
-      <SlateInput/>
-      <ImageUploader
-        withIcon={true}
-        buttonText='Choose one photo'
-        onChange={this.onDrop}
-        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-        maxFileSize={5242880}
-        singleImage={true}
-      />
-      {/*<Button onClick={this.storeCommentInFormData} variant="secondary">Comment</Button>*/}
-      <button onClick={this.allActionOnData} type="submit" className="btn btn-success">
-        Submit
-      </button>
-    </form>
-  );
-}
+    return (
+      <form onSubmit={this.props.handleSubmit}>
+        <Row>
+          <Col>
+            <Field
+              component={this.renderField}
+              name="pseudo"
+              type="text"
+              placeholder=""
+            />
+          </Col>
+          <Col>
+            <Field
+              component={this.renderField}
+              name="email"
+              type="email"
+              placeholder=""
+            />
+          </Col>
+        </Row>
+        <h5>Votre note : <ReactStars {...editableStars} /></h5>
+        <h5>Votre avis : </h5>
+        <SlateInput/>
+        <ImageUploader
+          withIcon={true}
+          buttonText='Choisissez une photo'
+          onChange={this.onDrop}
+          imgExtension={['.jpg', '.gif', '.png']}
+          maxFileSize={5242880}
+          singleImage={true}
+          withPreview={true}
+        />
+        <Row className="justify-content-center">
+          <button onClick={this.allActionOnData} type="submit" className="btn btn-success btn-lg">
+            Publier l'avis
+          </button>
+        </Row>
+      </form>
+    );
+  }
 }
 
 export default reduxForm({

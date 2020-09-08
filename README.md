@@ -1,9 +1,11 @@
 ## Formulaire de création d'avis
 
-####Pré-requis :
+**Pré-requis** :
+
 Docker avec utilisation de docker-compose
 
-####Installation :
+**Installation** :
+
 clonez le projet puis lancez les commandes suivantes
 
 Téléchargement des images

@@ -1,0 +1,6 @@
+resources:
+    App\Entity\Review:
+        attributes:
+            filters:
+                - 'review.ordering_filter'
+                - 'review.search_filter'

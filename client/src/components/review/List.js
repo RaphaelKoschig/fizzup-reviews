@@ -6,11 +6,20 @@ import { list, reset } from '../../actions/review/list';
 import { ENTRYPOINT } from '../../config/entrypoint';
 import SlateReader from "../tools/SlateReader";
 import ReactStars from "react-rating-stars-component";
-import {Col, Container, Row, Image} from "react-bootstrap";
+import {Col, Container, Row, Image, Button} from "react-bootstrap";
 import Moment from 'moment';
 import './review.css'
+import {extractHubURL, fetch, normalize} from "../../utils/dataAccess";
 
 class List extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listReviews : null,
+      orderDirection : 'asc'
+    }
+  }
+
   static propTypes = {
     retrieved: PropTypes.object,
     loading: PropTypes.bool.isRequired,
@@ -40,8 +49,54 @@ class List extends Component {
     this.props.reset(this.props.eventSource);
   }
 
+  orderList = (orderName) => {
+    let params = {};
+    if (orderName === 'rating') params = { 'order[rating]' : this.state.orderDirection};
+    if (orderName === 'createdAt') params = { 'order[createdAt]' : this.state.orderDirection}
+    fetch('reviews', params )
+      .then(response =>
+        response
+          .json()
+          .then(newRetrieved => ({ newRetrieved, hubURL: extractHubURL(response) }))
+      )
+      .then(({ newRetrieved, hubURL }) => {
+        newRetrieved = normalize(newRetrieved)
+        this.setState({listReviews : newRetrieved});
+        console.log(newRetrieved);
+        if (this.state.orderDirection ==='asc') {
+          this.setState({orderDirection : 'desc'})
+        }
+        else {
+          this.setState({orderDirection : 'asc'})
+        }
+      })
+  }
+
   render() {
     Moment.locale('fr');
+
+    const editableStars = {
+      size: 40,
+      edit: true,
+      onChange: starValue => {
+          fetch('reviews', { rating: starValue })
+            .then(response =>
+              response
+                .json()
+                .then(newRetrieved => ({ newRetrieved, hubURL: extractHubURL(response) }))
+            )
+            .then(({ newRetrieved, hubURL }) => {
+              newRetrieved = normalize(newRetrieved)
+              this.setState({listReviews : newRetrieved});
+              console.log(newRetrieved);
+            })
+      }
+    };
+
+    let listOfReviews = this.props.retrieved;
+    if (this.state.listReviews != null) {
+      listOfReviews = this.state.listReviews;
+    }
 
     return (
       <Container className="main-container">
@@ -64,9 +119,20 @@ class List extends Component {
             Donner votre avis
           </Link>
         </p>
+        <Row>
+          <Col>
+            <h5>Cherchez selon note : <ReactStars {...editableStars} /></h5>
+          </Col>
+          <Col className="col-4">
+            <Button className="btn btn-info" onClick={() => {this.orderList('rating')}}>Trier par Note</Button>
+            <Button className="btn btn-info" onClick={() => {this.orderList('createdAt')}}>Trier par Date</Button>
+          </Col>
+        </Row>
 
-        {this.props.retrieved &&
-        this.props.retrieved['hydra:member'].map(item => (
+
+        {
+          listOfReviews &&
+          listOfReviews['hydra:member'].map(item => (
           <Container key={item['@id']} className="review-container">
               <Row className="justify-content-between">
                 <Col>
@@ -87,7 +153,9 @@ class List extends Component {
                   <SlateReader itemValue={item['comment']}/>
                 </Col>
                 <Col className="justify-content-center col-4">
-                  <a href={ENTRYPOINT +'/photo/'+ item['photo']}><Image src={ENTRYPOINT +'/photo/'+ item['photo']} className="review-photo" thumbnail/></a>
+                  <a href={ENTRYPOINT +'/photo/'+ item['photo']}>
+                    <Image src={ENTRYPOINT +'/photo/'+ item['photo']} className="review-photo" thumbnail/>
+                  </a>
                 </Col>
               </Row>
           </Container>
@@ -110,12 +178,12 @@ class List extends Component {
     } = view;
 
     return (
-      <nav aria-label="Page navigation">
+      <nav aria-label="Page navigation" className="navigation">
         <Link
           to="."
           className={`btn btn-primary${previous ? '' : ' disabled'}`}
         >
-          <span aria-hidden="true">&lArr;</span> First
+          <span aria-hidden="true">&lArr;</span> Première page
         </Link>
         <Link
           to={
@@ -123,19 +191,19 @@ class List extends Component {
           }
           className={`btn btn-primary${previous ? '' : ' disabled'}`}
         >
-          <span aria-hidden="true">&larr;</span> Previous
+          <span aria-hidden="true">&larr;</span> Précédent
         </Link>
         <Link
           to={next ? encodeURIComponent(next) : '#'}
           className={`btn btn-primary${next ? '' : ' disabled'}`}
         >
-          Next <span aria-hidden="true">&rarr;</span>
+          Suivant <span aria-hidden="true">&rarr;</span>
         </Link>
         <Link
           to={last ? encodeURIComponent(last) : '#'}
           className={`btn btn-primary${next ? '' : ' disabled'}`}
         >
-          Last <span aria-hidden="true">&rArr;</span>
+          Dernière page <span aria-hidden="true">&rArr;</span>
         </Link>
       </nav>
     );

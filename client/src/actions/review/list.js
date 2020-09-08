@@ -18,12 +18,13 @@ export function success(retrieved) {
   return { type: 'REVIEW_LIST_SUCCESS', retrieved };
 }
 
-export function list(page = 'reviews') {
+export function list(page = 'reviews', params) {
+
   return dispatch => {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(page)
+    fetch(page, params)
       .then(response =>
         response
           .json()

@@ -26,3 +26,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    review.ordering_filter:
+        parent:        'api_platform.doctrine.orm.order_filter'
+        arguments:     [ { createdAt: ~, rating: ~ } ]
+        tags:          [ { name: 'api_platform.filter' } ]
+        autowire: false
+        autoconfigure: false
+        public: false
+
+    review.search_filter:
+        parent:        'api_platform.doctrine.orm.search_filter'
+        arguments:     [ { rating: exact } ]
+        tags:          [ { name: 'api_platform.filter' } ]
+        autowire: false
+        autoconfigure: false
+        public: false

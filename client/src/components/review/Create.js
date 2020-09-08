@@ -33,7 +33,7 @@ class Create extends Component {
       <Container fluid className="container-md main-container">
         <h1>Nouvel avis - consommateur</h1>
         <Link to="." className="btn btn-secondary">
-          Back to list
+          Revenir à la liste d'avis
         </Link>
 
         {this.props.loading && (

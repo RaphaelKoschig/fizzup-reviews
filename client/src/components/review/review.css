@@ -18,3 +18,11 @@
     max-height: 200px;
     margin: 10px;
 }
+
+.navigation .btn {
+    margin: 5px;
+}
+
+.btn-info {
+    margin: 5px;
+}

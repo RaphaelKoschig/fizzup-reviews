@@ -14,6 +14,7 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/collections" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/common" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/doctrine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/doctrine-migrations-bundle" />
@@ -29,13 +30,17 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/easyrdf/easyrdf" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/fig/link-util" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/friendsofphp/php-cs-fixer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/hautelook/alice-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/laminas/laminas-eventmanager" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/laminas/laminas-zendframework-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/html-to-markdown" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/nelmio/alice" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/nelmio/cors-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/ocramius/package-versions" />
@@ -51,6 +56,10 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/link" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/asset" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/cache" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/cache-contracts" />
@@ -103,6 +112,7 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/web-link" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/web-profiler-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/theofidry/alice-data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/twig/twig" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/webimpress/safe-writer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/webmozart/assert" />

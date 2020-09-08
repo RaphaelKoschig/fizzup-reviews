@@ -6,7 +6,7 @@ import mapValues from 'lodash/mapValues';
 
 const MIME_TYPE = 'application/ld+json';
 
-export function fetch(id, options = {}) {
+export function fetch(id, params, options = {}) {
   if ('undefined' === typeof options.headers) options.headers = new Headers();
   if (null === options.headers.get('Accept'))
     options.headers.set('Accept', MIME_TYPE);
@@ -18,7 +18,10 @@ export function fetch(id, options = {}) {
   )
     options.headers.set('Content-Type', MIME_TYPE);
 
-  return global.fetch(new URL(id, ENTRYPOINT), options).then(response => {
+  let url = new URL(id , ENTRYPOINT);
+  url.search = new URLSearchParams(params).toString();
+
+  return global.fetch(url, options).then(response => {
     if (response.ok) return response;
 
     return response.json().then(

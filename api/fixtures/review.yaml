@@ -1,0 +1,8 @@
+App\Entity\Review:
+    review_{1..10}:
+        pseudo: <userName()>
+        email: <safeEmail()>
+        rating: <numberBetween(1, 5)>
+        comment: <randomElement(['[{"text":"Coucou, il est vraiment cool !","italic":true,"bold":true}]', '[{"text":"Yeeeeeaah super produit de Armorae "}]', '[{"type":"text","children":[{"text":"Je trouve cet "},{"text":"arc en if","bold":true},{"text":" vraiment bof... pour ces raisons :"}]},{"type":"list","children":[{"text":"Il est trop petit"}]},{"type":"list","children":[{"text":"Il est trop tendu"}]},{"type":"list","children":[{"text":"Pas fabriqué par "},{"text":"Yann Bolobolo","italic":true,"bold":true}]}]'])>
+        photo: <randomElement(['413.jpg', '165912_464197703634872_2125367031_n.jpg', '_dsc0103.jpg', '_dsc0107.jpg', '_dsc0216.jpg'])>
+        createdAt: <dateTimeBetween('-1 years', 'now', 'Europe/Paris')>

@@ -17,7 +17,7 @@ export function create(values) {
   return dispatch => {
     dispatch(loading(true));
 
-    return fetch('reviews', { method: 'POST', body: JSON.stringify(values) })
+    return fetch('reviews', {}, { method: 'POST', body: JSON.stringify(values) })
       .then(response => {
         dispatch(loading(false));
 

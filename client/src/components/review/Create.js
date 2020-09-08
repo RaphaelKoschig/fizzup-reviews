@@ -25,7 +25,7 @@ class Create extends Component {
     if (this.props.created)
       return (
         <Redirect
-          to={`edit/${encodeURIComponent(this.props.created['@id'])}`}
+          to="."
         />
       );
 

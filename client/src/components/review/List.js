@@ -121,7 +121,7 @@ class List extends Component {
         </p>
         <Row>
           <Col>
-            <h5>Cherchez selon note : <ReactStars {...editableStars} /></h5>
+            <h5>Chercher selon note : <ReactStars {...editableStars} /></h5>
           </Col>
           <Col className="col-4">
             <Button className="btn btn-info" onClick={() => {this.orderList('rating')}}>Trier par Note</Button>
@@ -139,11 +139,10 @@ class List extends Component {
                   <ReactStars value={item['rating']} edit={false}/>
                   <strong>{item['pseudo']}</strong>
                 </Col>
-                <Col className="col-4">
-                  <Row>
+                <Col className="justify-content-end">
+                  <Row className="float-right">
                     Publié le {Moment(item['createdAt']).format('DD/MM/Y')} à {Moment(item['createdAt']).format('HH:mm')}
-                  </Row>
-                  <Row>
+                  <br/>
                     email : {item['email']}
                   </Row>
                 </Col>
@@ -152,9 +151,9 @@ class List extends Component {
                 <Col className="col-8">
                   <SlateReader itemValue={item['comment']}/>
                 </Col>
-                <Col className="justify-content-center col-4">
+                <Col className="justify-content-center">
                   <a href={ENTRYPOINT +'/photo/'+ item['photo']}>
-                    <Image src={ENTRYPOINT +'/photo/'+ item['photo']} className="review-photo" thumbnail/>
+                    <Image src={ENTRYPOINT +'/photo/'+ item['photo']} className="review-photo img-fluid" thumbnail/>
                   </a>
                 </Col>
               </Row>

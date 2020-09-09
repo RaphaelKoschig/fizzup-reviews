@@ -8,12 +8,14 @@ import SlateInput from "../tools/SlateInput";
 import ReactStars from "react-rating-stars-component";
 import {Col, Row} from "react-bootstrap";
 
+const required = value => value ? undefined : 'Veuillez remplir ce champ'
 
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null
+      selectedFile: null,
+      starRating: null
     };
     this.onDrop = this.onDrop.bind(this);
   }
@@ -89,13 +91,19 @@ class Form extends Component {
     this.props.change('comment', commentValue);
   }
 
-  giveRatingFromStars = () => {
-
-  }
-
-  allActionOnData = () => {
-    this.fileUploadHandler();
-    this.storeCommentInFormData();
+  allActionOnData = (e) => {
+    if (this.state.selectedFile === null) {
+      e.preventDefault();
+      alert("Veuillez envoyer une photo");
+    }
+    else if (this.state.starRating === null) {
+      e.preventDefault();
+      alert("Veuillez donner une note");
+    }
+    else {
+      this.fileUploadHandler();
+      this.storeCommentInFormData();
+    }
   }
 
   render() {
@@ -104,7 +112,8 @@ class Form extends Component {
       size: 40,
       edit: true,
       onChange: starValue => {
-        this.props.change('rating', starValue)
+        this.setState({starRating : starValue});
+        this.props.change('rating', starValue);
       }
     };
 
@@ -117,6 +126,7 @@ class Form extends Component {
               name="pseudo"
               type="text"
               placeholder=""
+              validate={[ required ]}
             />
           </Col>
           <Col>
@@ -125,6 +135,7 @@ class Form extends Component {
               name="email"
               type="email"
               placeholder=""
+              validate={[ required ]}
             />
           </Col>
         </Row>

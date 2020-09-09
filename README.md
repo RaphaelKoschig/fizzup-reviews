@@ -8,15 +8,17 @@ Docker avec utilisation de docker-compose
 
 clonez le projet puis lancez les commandes suivantes
 
-Téléchargement des images
+Téléchargement des images :
 
 `docker-compose pull`
 
-Installation et lancement des conteneurs (prenez un café)
+Installation et lancement des conteneurs (prenez un café) :
 
 `docker-compose up -d`
+ou
+`docker-compose up -build` si la première commande génère une erreur
 
-Création de la base de données
+Création de la base de données :
 
 `docker-compose exec php bin/console doctrine:migrations:migrate`
 

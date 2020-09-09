@@ -37,9 +37,13 @@ export function create(values) {
   };
 }
 
-export function reset() {
+export function reset(eventSource) {
   return dispatch => {
+    if (eventSource) eventSource.close();
+
+    dispatch({ type: 'REVIEW_CREATE_RESET' });
     dispatch(loading(false));
     dispatch(error(null));
+    dispatch(success(null));
   };
 }

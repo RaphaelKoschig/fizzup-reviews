@@ -14,18 +14,19 @@ class Create extends Component {
     loading: PropTypes.bool.isRequired,
     created: PropTypes.object,
     create: PropTypes.func.isRequired,
+    eventSource: PropTypes.instanceOf(EventSource),
     reset: PropTypes.func.isRequired
   };
 
   componentWillUnmount() {
-    this.props.reset();
+    this.props.reset(this.props.eventSource);
   }
 
   render() {
     if (this.props.created)
       return (
         <Redirect
-          to="."
+          to={`/`}
         />
       );
 
@@ -56,13 +57,14 @@ class Create extends Component {
 }
 
 const mapStateToProps = state => {
+  const eventSource = state.review.create.eventSource;
   const { created, error, loading } = state.review.create;
-  return { created, error, loading };
+  return { created, error, loading, eventSource };
 };
 
 const mapDispatchToProps = dispatch => ({
   create: values => dispatch(create(values)),
-  reset: () => dispatch(reset())
+  reset: eventSource => dispatch(reset(eventSource))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

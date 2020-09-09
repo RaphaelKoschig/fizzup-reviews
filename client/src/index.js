@@ -4,7 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { reducer as form } from 'redux-form';
-import { Route, Switch } from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import {
   ConnectedRouter,
@@ -14,7 +14,6 @@ import {
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import * as serviceWorker from './serviceWorker';
-import Welcome from './Welcome';
 import review from './reducers/review/';
 import reviewRoutes from './routes/review';
 
@@ -32,9 +31,8 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/reviews" component={Welcome} strict={true} exact={true}/>
         {reviewRoutes}
-        <Route render={() => <h1>Not Found</h1>} />
+        <Route render={() => <Redirect to="/reviews/" />} />
       </Switch>
     </ConnectedRouter>
   </Provider>,
